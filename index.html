@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+  </head>
+  <body>
+    function myFunction() {
+  <!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>단리 vs 복리 자산 증식 비교기</title>
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
+    <style>
+        :root {
+            --background: #f2f4f6;
+            --card-bg: #ffffff;
+            --primary: #3182f6;
+            --primary-hover: #1b64da;
+            --text-main: #191f28;
+            --text-sub: #4e5968;
+            --text-muted: #8b95a1;
+            --gray-bg: #f9fafb;
+            --border-color: #e5e8eb;
+            --border-radius: 18px;
+            --error: #f04438;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+        }
+
+        body {
+            background-color: var(--background);
+            color: var(--text-main);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 620px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        header {
+            text-align: center;
+            padding: 10px 0;
+        }
+
+        header h1 {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--text-main);
+            margin-bottom: 6px;
+            letter-spacing: -0.5px;
+        }
+
+        header p {
+            font-size: 14px;
+            color: var(--text-sub);
+            font-weight: 500;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 28px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04);
+            border: 1px solid var(--border-color);
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .form-control {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-control label {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-sub);
+        }
+
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .form-control input {
+            width: 100%;
+            padding: 16px;
+            padding-right: 45px;
+            border: 1.5px solid var(--border-color);
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            outline: none;
+        }
+
+        .form-control input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(49, 130, 246, 0.15);
+        }
+
+        .unit {
+            position: absolute;
+            right: 18px;
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+
+        .btn-calc {
+            width: 100%;
+            background-color: var(--primary);
+            color: #ffffff;
+            border: none;
+            padding: 18px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin-top: 10px;
+        }
+
+        .btn-calc:hover {
+            background-color: var(--primary-hover);
+        }
+
+        .result-container {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            display: none;
+            opacity: 0;
+            transform: translateY(15px);
+            transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+
+        .result-container.show {
+            display: flex;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .main-results {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        @media (max-width: 480px) {
+            .main-results {
+                grid-template-columns: 1fr; 
+            }
+        }
+
+        .result-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .result-card-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text-sub);
+        }
+
+        .result-value {
+            font-size: 24px;
+            font-weight: 800;
+        }
+
+        .interest-details {
+            font-size: 13px;
+            color: var(--text-muted);
+            border-top: 1px solid #f2f4f6;
+            padding-top: 10px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .compound-highlight {
+            border: 2px solid rgba(49, 130, 246, 0.4);
+            background: linear-gradient(180deg, #ffffff 0%, #f4f8ff 100%);
+        }
+        .compound-highlight .result-value {
+            color: var(--primary);
+        }
+
+        .dividend-card {
+            background-color: var(--gray-bg);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .dividend-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: #4e5968;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .dividend-description {
+            font-size: 13px;
+            line-height: 1.6;
+            color: #6b7684;
+        }
+
+        .segment-control {
+            display: flex;
+            background-color: #e5e8eb;
+            border-radius: 12px;
+            padding: 4px;
+            gap: 4px;
+        }
+
+        .segment-btn {
+            flex: 1;
+            border: none;
+            background: none;
+            padding: 12px;
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--text-sub);
+            border-radius: 9px;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .segment-btn.active {
+            background-color: #ffffff;
+            color: var(--primary);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .dividend-highlight {
+            font-size: 14px;
+            font-weight: 600;
+            background-color: #fff;
+            padding: 14px 18px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .dividend-highlight strong {
+            color: var(--primary);
+            font-weight: 800;
+        }
+
+        .recommendation-tag {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 700;
+            margin-top: 4px;
+        }
+
+        .tag-high { background-color: #ffeef0; color: var(--error); }
+        .tag-stable { background-color: #e6fcf5; color: #0ca678; }
+
+        .stock-table-container {
+            overflow-x: auto;
+            margin-top: 8px;
+        }
+
+        .stock-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+        }
+
+        .stock-table th {
+            background-color: #f2f4f6;
+            color: var(--text-sub);
+            padding: 10px;
+            font-weight: 700;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .stock-table td {
+            padding: 10px;
+            border-bottom: 1px solid #f2f4f6;
+        }
+
+        .toast-message {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-20px);
+            background-color: #191f28;
+            color: #ffffff;
+            padding: 14px 24px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 600;
+            opacity: 0;
+            transition: all 0.3s ease;
+            pointer-events: none;
+        }
+
+        .toast-message.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>단리 vs 복리 자산 증식 비교기</h1>
+            <p>경제 공식으로 알아보는 이자의 힘과 주식 배당 재투자 전략</p>
+        </header>
+
+        <main class="card">
+            <div class="input-group">
+                <div class="form-control">
+                    <label for="principal">투자 원금</label>
+                    <div class="input-wrapper">
+                        <input type="text" id="principal" placeholder="예: 10,000,000" oninput="formatNumberInput(this)">
+                        <span class="unit">원</span>
+                    </div>
+                </div>
+                <div class="form-control">
+                    <label for="interestRate">연 이자율 / 배당 수익률</label>
+                    <div class="input-wrapper">
+                        <input type="number" id="interestRate" step="0.1" placeholder="예: 5.0">
+                        <span class="unit">%</span>
+                    </div>
+                </div>
+                <div class="form-control">
+                    <label for="period">투자 기간</label>
+                    <div class="input-wrapper">
+                        <input type="number" id="period" placeholder="예: 5">
+                        <span class="unit">년</span>
+                    </div>
+                </div>
+                <button class="btn-calc" onclick="calculateAssets()">자산 증식 결과 비교하기</button>
+            </div>
+        </main>
+
+        <section class="result-container" id="resultContainer">
+            <div class="main-results">
+                <div class="result-card">
+                    <div class="result-card-header">🏦 은행 단리 예금</div>
+                    <div class="result-value" id="simpleResult">0원</div>
+                    <div class="interest-details">
+                        <span>순수 이자 소득</span>
+                        <span id="simpleInterestOnly">0원</span>
+                    </div>
+                </div>
+                <div class="result-card compound-highlight">
+                    <div class="result-card-header">💰 일반 복리 적립</div>
+                    <div class="result-value" id="compoundResult">0원</div>
+                    <div class="interest-details">
+                        <span>순수 이자 소득</span>
+                        <span id="compoundInterestOnly">0원</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dividend-card">
+                <div class="dividend-title">💡 만약 이 돈으로 주식 배당 투자를 한다면?</div>
+                <p class="dividend-description">배당금을 그대로 재매수할 때 강력한 <strong>'배당 복리 효과'</strong>가 나타납니다.</p>
+                <div class="segment-control">
+                    <button class="segment-btn active" id="btnHigh" onclick="setDividendStrategy('high')">배당금이 높은 것 💵</button>
+                    <button class="segment-btn" id="btnStable" onclick="setDividendStrategy('stable')">안정적인 것 🛡️</button>
+                </div>
+                <div class="dividend-highlight" id="dividendInsight"></div>
+            </div>
+        </section>
+    </div>
+
+    <div class="toast-message" id="toast">값을 올바르게 입력해주세요.</div>
+
+    <script>
+        let currentStrategy = 'high';
+        let lastCalculation = null;
+
+        const highDividendStocks = [
+            { name: "Realty Income (O)", yieldRange: "5~6%", midYield: 5.5, desc: "월배당으로 유명한 리츠" },
+            { name: "Altria (MO)", yieldRange: "7~9%", midYield: 8.0, desc: "초고배당, 규제 위험성 존재" },
+            { name: "AbbVie (ABBV)", yieldRange: "3.5~4.2%", midYield: 3.85, desc: "제약 대기업, 배당·성장 겸비" },
+            { name: "Ares Capital (ARCC)", yieldRange: "8~10%", midYield: 9.0, desc: "고배당 BDC, 경기 민감" },
+            { name: "AGNC Investment (AGNC)", yieldRange: "12~15%", midYield: 13.5, desc: "초고배당, 변동성 유의" }
+        ];
+
+        const stableDividendStocks = [
+            { name: "Coca-Cola (KO)", yieldRange: "2.5~3.0%", midYield: 2.75, desc: "60년 이상 배당 우상향" },
+            { name: "Johnson & Johnson (JNJ)", yieldRange: "2.8~3.3%", midYield: 3.05, desc: "헬스케어, 최상위 안정성" },
+            { name: "Procter & Gamble (PG)", yieldRange: "2.2~2.8%", midYield: 2.5, desc: "생활필수품, 꾸준한 주주환원" },
+            { name: "PepsiCo (PEP)", yieldRange: "2.8~3.3%", midYield: 3.05, desc: "글로벌 식음료 가치주" },
+            { name: "McDonald's (MCD)", yieldRange: "2.0~2.5%", midYield: 2.25, desc: "프랜차이즈 기반 탄탄한 배당" }
+        ];
+
+        function formatNumberInput(input) {
+            let value = input.value.replace(/[^0-9]/g, "");
+            input.value = value ? Number(value).toLocaleString('ko-KR') : "";
+        }
+
+        function getRawNumber(valueString) {
+            return Number(valueString.replace(/,/g, ""));
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById("toast");
+            toast.innerText = message;
+            toast.classList.add("show");
+            setTimeout(() => toast.classList.remove("show"), 2500);
+        }
+
+        function setDividendStrategy(strategy) {
+            currentStrategy = strategy;
+            document.getElementById("btnHigh").classList.toggle("active", strategy === 'high');
+            document.getElementById("btnStable").classList.toggle("active", strategy === 'stable');
+            if (lastCalculation) renderDividendInsight();
+        }
+
+        function renderDividendInsight() {
+            if (!lastCalculation) return;
+            const { principal, profitDifference } = lastCalculation;
+            const insightElement = document.getElementById("dividendInsight");
+
+            const stocks = currentStrategy === 'high' ? highDividendStocks : stableDividendStocks;
+            const tagClass = currentStrategy === 'high' ? 'recommendation-tag tag-high' : 'recommendation-tag tag-stable';
+            const tagText = currentStrategy === 'high' ? '고배당주 목록 💵' : '안정적 배당 성장주 목록 🛡️';
+
+            let tableRowsHtml = "";
+            stocks.forEach(stock => {
+                const yearlyDividend = Math.round(principal * (stock.midYield / 100));
+                tableRowsHtml += `
+                    <tr>
+                        <td><strong>${stock.name}</strong></td>
+                        <td style="color: var(--primary); font-weight: 700;">${stock.yieldRange}</td>
+                        <td style="font-weight: 700;">약 ${yearlyDividend.toLocaleString('ko-KR')}원/년</td>
+                        <td style="color: var(--text-sub); font-size: 11px;">${stock.desc}</td>
+                    </tr>
+                `;
+            });
+
+            insightElement.innerHTML = `
+                <div>만기 시 은행 단리 예금 대비 무려 <strong>${profitDifference.toLocaleString('ko-KR')}원</strong>을 추가로 더 모을 수 있습니다.</div>
+                <div style="margin-top: 4px;">
+                    <span class="${tagClass}">${tagText}</span>
+                    <p style="font-size: 11px; color: var(--text-muted); margin-bottom: 6px;">* 입력하신 원금 기준 첫 해 예상 배당금입니다.</p>
+                    <div class="stock-table-container">
+                        <table class="stock-table">
+                            <thead><tr><th>종목명</th><th>배당수익률</th><th>예상 연 배당금</th><th>특징</th></tr></thead>
+                            <tbody>${tableRowsHtml}</tbody>
+                        </table>
+                    </div>
+                </div>
+            `;
+        }
+
+        function calculateAssets() {
+            const rawPrincipal = document.getElementById("principal").value;
+            const rawRate = document.getElementById("interestRate").value;
+            const rawPeriod = document.getElementById("period").value;
+
+            if (!rawPrincipal || !rawRate || !rawPeriod) {
+                showToast("모든 투자 정보를 정상적으로 입력해주세요.");
+                return;
+            }
+
+            const principal = getRawNumber(rawPrincipal);
+            const rate = parseFloat(rawRate) / 100;
+            const period = parseInt(rawPeriod);
+
+            if (principal <= 0 || rate <= 0 || period <= 0) {
+                showToast("0보다 큰 숫자를 입력해야 계산이 가능합니다.");
+                return;
+            }
+
+            const simpleFinal = Math.round(principal * (1 + rate * period));
+            const compoundFinal = Math.round(principal * Math.pow((1 + rate), period));
+            const profitDifference = compoundFinal - simpleFinal;
+
+            lastCalculation = { principal, profitDifference };
+
+            document.getElementById("simpleResult").innerText = simpleFinal.toLocaleString('ko-KR') + " 원";
+            document.getElementById("simpleInterestOnly").innerText = "+" + (simpleFinal - principal).toLocaleString('ko-KR') + " 원";
+            document.getElementById("compoundResult").innerText = compoundFinal.toLocaleString('ko-KR') + " 원";
+            document.getElementById("compoundInterestOnly").innerText = "+" + (compoundFinal - principal).toLocaleString('ko-KR') + " 원";
+
+            renderDividendInsight();
+
+            const resultContainer = document.getElementById("resultContainer");
+            resultContainer.style.display = "flex";
+            setTimeout(() => resultContainer.classList.add("show"), 50);
+        }
+    </script>
+</body>
+</html
+}
+  </body>
+</html>
