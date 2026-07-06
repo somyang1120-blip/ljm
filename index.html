@@ -398,7 +398,7 @@
 
             <div class="dividend-card">
                 <div class="dividend-title">💡 만약 이 돈으로 주식 배당 투자를 한다면?</div>
-                <p class="dividend-description">배당금을 그대로 재매수할 때 강력한 <strong>'배당 복리 효과'</strong>가 나타납니다.</p>
+                <p class="dividend-description">단, 이는 배당금만 나타 가격이며 주가 변동에 따라 <strong>'손익 변화'</strong>가 있을 수 있음.</p>
                 <div class="segment-control">
                     <button class="segment-btn active" id="btnHigh" onclick="setDividendStrategy('high')">배당금이 높은 것 💵</button>
                     <button class="segment-btn" id="btnStable" onclick="setDividendStrategy('stable')">안정적인 것 🛡️</button>
@@ -476,7 +476,7 @@
             });
 
             insightElement.innerHTML = `
-                <div>만기 시 은행 단리 예금 대비 무려 <strong>${profitDifference.toLocaleString('ko-KR')}원</strong>을 추가로 더 모을 수 있습니다.</div>
+                <div> 복리 상품 이용 후 만기시시 예금 대비 무려 <strong>${profitDifference.toLocaleString('ko-KR')}원</strong>을 추가로 더 모을 수 있습니다.</div>
                 <div style="margin-top: 4px;">
                     <span class="${tagClass}">${tagText}</span>
                     <p style="font-size: 11px; color: var(--text-muted); margin-bottom: 6px;">* 입력하신 원금 기준 첫 해 예상 배당금입니다.</p>
